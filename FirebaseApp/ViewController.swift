@@ -13,7 +13,9 @@ import GoogleSignIn
 class ViewController: UIViewController {
     
     let signInConfig = GIDConfiguration.init(clientID: "77097381740-gdmqj4c0j4ukgj6cptb9l777md73h02m.apps.googleusercontent.com")
-     
+    
+    
+    //MARK: imageLoginCenter
     private let imageLoginCenter : UIImageView = {
        let titleLogin = UIImageView()
         titleLogin.contentMode = .scaleAspectFit
@@ -22,7 +24,7 @@ class ViewController: UIViewController {
          
         return titleLogin
     }()
-    
+    //MARK: mailTextField
     private let mailTextField : UITextField = {
        let mailTextField = UITextField()
         mailTextField.textColor = .black
@@ -43,7 +45,7 @@ class ViewController: UIViewController {
         mailTextField.layer.borderColor = UIColor.black.cgColor
         return mailTextField
     }()
-    
+    //MARK: passwordTextField
     private let passwordTextField : UITextField = {
        let passwordTextField = UITextField()
         passwordTextField.textColor = .black
@@ -63,26 +65,28 @@ class ViewController: UIViewController {
         passwordTextField.translatesAutoresizingMaskIntoConstraints = false
         return passwordTextField
     }()
+    
+    //MARK: iconMail
     private let iconMail: UIImageView = {
         let iconMail = UIImageView()
         iconMail.tintColor = .black
-        iconMail.contentMode = .scaleAspectFill
+        iconMail.contentMode = .scaleAspectFit
         iconMail.translatesAutoresizingMaskIntoConstraints = false
-        iconMail.image = UIImage(systemName: "mail")
+        iconMail.image = UIImage(named: "Email")
  
         
         return iconMail
     }()
-    
+    //MARK: iconPassword
     private let iconPassword: UIImageView = {
         let iconPassword = UIImageView()
         iconPassword.tintColor = .black
         iconPassword.contentMode = .scaleAspectFill
         iconPassword.translatesAutoresizingMaskIntoConstraints = false
-        iconPassword.image = UIImage(systemName: "lock")
+        iconPassword.image = UIImage(named: "Password")
         return iconPassword
     }()
-    
+    //MARK: loginButton
     private let loginButton: UIButton = {
         let loginButton = UIButton()
         loginButton.setTitle("Login", for: .normal)
@@ -101,7 +105,7 @@ class ViewController: UIViewController {
         return loginButton
     }()
     
-    
+    //MARK: containerViewLabelAndIconMail
     private let containerViewLabelAndIconMail : UIView = {
         let containerMail = UIView()
         containerMail.translatesAutoresizingMaskIntoConstraints = false
@@ -117,6 +121,7 @@ class ViewController: UIViewController {
         return containerMail
     }()
     
+    //MARK: containerViewPasswordAndIconMail
     private let containerViewPasswordAndIconMail : UIView = {
         let containerPassword = UIView()
         containerPassword.translatesAutoresizingMaskIntoConstraints = false
@@ -131,6 +136,7 @@ class ViewController: UIViewController {
         return containerPassword
     }()
     
+    //MARK: containerGoogleLogin
     private let containerGoogleLogin : GIDSignInButton = {
         let containerGoogleLogin = GIDSignInButton()
         containerGoogleLogin.translatesAutoresizingMaskIntoConstraints = false
@@ -147,7 +153,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemGray6
          
         
         setUpView()
@@ -158,6 +164,7 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
         mailTextField.becomeFirstResponder()
     }
+    //MARK: didTapButtonGoogle
     @objc func didTapButtonGoogle (){
         GIDSignIn.sharedInstance.signIn(with: signInConfig, presenting: self) { result, error in
             guard result == result, error == nil else {
@@ -166,7 +173,7 @@ class ViewController: UIViewController {
             
         }
     }
-    
+    //MARK: didTapButton
     @objc func didTapButton (){
         guard let mail = mailTextField.text, !mail.isEmpty,
               let password = passwordTextField.text, !password.isEmpty else {
@@ -206,6 +213,7 @@ class ViewController: UIViewController {
          
     }
     
+    //MARK: showCreateAccount
     @objc func showCreateAccount(mail:String, password:String){
         let alert = UIAlertController(title: "Create Account", message: "Would you like create an account", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { _ in
@@ -228,22 +236,17 @@ class ViewController: UIViewController {
              strongSelf.iconPassword.isHidden = true
              strongSelf.mailTextField.resignFirstResponder()
              strongSelf.passwordTextField.resignFirstResponder()
-              
-
-               
-             
-                 
                 
             })
             
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
             
-            
         }))
-        
         present(alert, animated: true, completion: nil)
     }
+    
+    //MARK:- SetuPView
     func setUpView (){
         view.addSubview(imageLoginCenter)
         view.addSubview(loginButton)
@@ -265,64 +268,56 @@ class ViewController: UIViewController {
     
     func setUpConstraintsV2(){
         
-        //Mark:- imageLoginCenter
+        //MARK:- imageLoginCenter
         imageLoginCenter.topAnchor.constraint(equalTo: view.topAnchor, constant: 150).isActive = true
         imageLoginCenter.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 80).isActive = true
         imageLoginCenter.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -55).isActive = true
         imageLoginCenter.heightAnchor.constraint(equalToConstant: 150).isActive = true
-        
          
-         
-        //Mark:- iconMail
+        //MARK:- iconMail
         iconMail.topAnchor.constraint(equalTo: containerViewLabelAndIconMail.topAnchor, constant: 18).isActive = true
         iconMail.leadingAnchor.constraint(equalTo: containerViewLabelAndIconMail.leadingAnchor,constant: 10).isActive = true
         iconMail.heightAnchor.constraint(equalToConstant: 50).isActive = true
         iconMail.widthAnchor.constraint(equalToConstant: 50).isActive = true
         
-        
-        //Mark:- mailTextField
+        //MARK:- mailTextField
         mailTextField.topAnchor.constraint(equalTo: containerViewLabelAndIconMail.topAnchor, constant: 15).isActive = true
         mailTextField.leadingAnchor.constraint(equalTo: iconMail.trailingAnchor, constant: 10).isActive = true
         mailTextField.trailingAnchor.constraint(equalTo: containerViewLabelAndIconMail.trailingAnchor, constant: -10).isActive = true
         mailTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-        //Mark:- containerViewLabelAndIconMail
+        //MARK:- containerViewLabelAndIconMail
         containerViewLabelAndIconMail.topAnchor.constraint(equalTo: imageLoginCenter.bottomAnchor, constant: 20).isActive = true
         containerViewLabelAndIconMail.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         containerViewLabelAndIconMail.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         containerViewLabelAndIconMail.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
-        
-        //Mark:- iconPassword
+        //MARK:- iconPassword
         iconPassword.topAnchor.constraint(equalTo: containerViewPasswordAndIconMail.topAnchor, constant: 18).isActive = true
         iconPassword.leadingAnchor.constraint(equalTo: containerViewPasswordAndIconMail.leadingAnchor,constant: 10).isActive = true
         iconPassword.heightAnchor.constraint(equalToConstant: 50).isActive = true
         iconPassword.widthAnchor.constraint(equalToConstant: 50).isActive = true
  
-         
-    
-        
-        //Mark:- containerViewPasswordAndIconMail
+        //MARK:- containerViewPasswordAndIconMail
         containerViewPasswordAndIconMail.topAnchor.constraint(equalTo: containerViewLabelAndIconMail.bottomAnchor, constant: 20).isActive = true
         containerViewPasswordAndIconMail.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         containerViewPasswordAndIconMail.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         containerViewPasswordAndIconMail.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
-        //Mark:- passwordTextField
+        //MARK:- passwordTextField
         passwordTextField.topAnchor.constraint(equalTo: containerViewPasswordAndIconMail.topAnchor, constant: 15).isActive = true
         passwordTextField.leadingAnchor.constraint(equalTo: iconPassword.trailingAnchor, constant: 10).isActive = true
         passwordTextField.trailingAnchor.constraint(equalTo: containerViewLabelAndIconMail.trailingAnchor, constant: -10).isActive = true
         passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-        
-        //Mark:- loginButton
+        //MARK:- loginButton
 
         loginButton.topAnchor.constraint(equalTo: containerViewPasswordAndIconMail.bottomAnchor, constant: 20).isActive = true
         loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
         loginButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         
-        //Mark:- containerGoogleLogin
+        //MARK:- containerGoogleLogin
 
         containerGoogleLogin.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 20).isActive = true
         containerGoogleLogin.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30).isActive = true
@@ -330,7 +325,5 @@ class ViewController: UIViewController {
         containerGoogleLogin.widthAnchor.constraint(equalToConstant: 150).isActive = true
     }
     
-     
-
 }
 
