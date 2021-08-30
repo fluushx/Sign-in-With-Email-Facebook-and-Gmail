@@ -10,4 +10,5 @@ pod 'Firebase/Core'
 pod 'Firebase/Crashlytics'
 pod 'Firebase/Database'
 pod 'Firebase/Auth'
+pod 'GoogleSignIn'
 end
